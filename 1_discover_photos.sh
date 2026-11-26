@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-SOURCE_DIR="/archive/organizer"
+SOURCE_DIR="/data/unsorted"
 DB_CONFIG="${HOME}/.config/organizer/client.cnf"
 EARLIEST_TRUSTED_EPOCH=946684800 # 2000-01-01 00:00:00 UTC
 
@@ -104,11 +104,7 @@ SELECT
   ${size_bytes},
   ${created_sql},
   FROM_UNIXTIME(${modified_epoch})
-WHERE NOT EXISTS (
-  SELECT 1
-  FROM photos
-  WHERE BINARY filePath = BINARY ${path_sql}
-);
+;
 SQL
 done < "$file_list"
 
